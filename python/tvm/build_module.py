@@ -5,8 +5,8 @@ LoweredFunc and compiled Module.
 """
 from __future__ import absolute_import as _abs
 import warnings
-import types
 
+from ._ffi.function import Function
 from ._ffi.node import NodeBase, register_node
 from . import api
 from . import _api_internal
@@ -69,7 +69,7 @@ class DumpIR(object):
             vset[k] = v
         for k, v in vset.items():
             self._recover_list.append(recover)
-            vset[k] = self.decorate(v) if isinstance(v, types.FunctionType) else v
+            vset[k] = self.decorate(v) if isinstance(v, Function) else v
 
     def decorate_custompass(self, custom_pass):
         """decorate given list of custom passes, and return decorated passes"""
@@ -126,7 +126,8 @@ class BuildConfig(NodeBase):
         "restricted_func": True,
         "double_buffer_split_loop": 1,
         "dump_pass_ir": False,
-        "instrument_bound_checkers": False
+        "instrument_bound_checkers": False,
+        "disable_select_rewriting": False
     }
     _dump_ir = DumpIR()
 
@@ -368,7 +369,8 @@ def lower(sch,
     stmt = ir_pass.Simplify(stmt)
     stmt = ir_pass.LowerStorageAccessInfo(stmt)
     stmt = ir_pass.RemoveNoOp(stmt)
-    stmt = ir_pass.RewriteUnsafeSelect(stmt)
+    if not cfg.disable_select_rewriting:
+        stmt = ir_pass.RewriteUnsafeSelect(stmt)
     for f in lower_phase3:
         stmt = f(stmt)
     # Instrument BoundCheckers
