@@ -7,6 +7,7 @@ from . import mobilenet
 from . import mobilenet_v2
 from . import mlp
 from . import resnet
+from . import lenet
 from . import vgg
 from . import densenet
 from . import squeezenet

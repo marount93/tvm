@@ -61,12 +61,14 @@ import tvm.contrib.graph_runtime as runtime
 
 def get_network(name, batch_size):
     """Get the symbol definition and random weight of a network"""
-    input_shape = (batch_size, 3, 224, 224)
-    output_shape = (batch_size, 1000)
+    input_shape = (batch_size, 1, 28, 28)
+    output_shape = (batch_size, 10)
 
     if "resnet" in name:
         n_layer = int(name.split('-')[1])
         net, params = nnvm.testing.resnet.get_workload(num_layers=n_layer, batch_size=batch_size)
+    elif "lenet" in name:
+        net, params = nnvm.testing.lenet.get_workload(batch_size=batch_size)
     elif "vgg" in name:
         n_layer = int(name.split('-')[1])
         net, params = nnvm.testing.vgg.get_workload(num_layers=n_layer, batch_size=batch_size)
@@ -105,7 +107,7 @@ def get_network(name, batch_size):
 target = tvm.target.cuda()
 
 #### TUNING OPTION ####
-network = 'resnet-18'
+network = 'lenet'
 log_file = "%s.log" % network
 dtype = 'float32'
 

@@ -163,10 +163,15 @@ logging.getLogger('autotvm').setLevel(logging.DEBUG)
 logging.getLogger('autotvm').addHandler(logging.StreamHandler(sys.stdout))
 
 # the last layer in resnet
-N, H, W, CO, CI, KH, KW, strides, padding = 1, 7, 7, 512, 512, 3, 3, (1, 1), (1, 1)
+#N, H, W, CO, CI, KH, KW, strides, padding = 1, 7, 7, 512, 512, 3, 3, (1, 1), (1, 1)
+#N, H, W, CO, CI, KH, KW, strides, padding = 1, 28, 28, 20, 1, 3, 3, (1, 1), (1, 1)
+#N, H, W, CO, CI, KH, KW, strides, padding = 1, 14, 14, 50, 20, 3, 3, (1, 1), (1, 1)
+N, H, W, CO, CI, KH, KW, strides, padding = 1, 28, 28, 4, 4, 1, 20, (1, 1), (1, 1)
+
 task = autotvm.task.create(conv2d_no_batching,
                            args=(N, H, W, CO, CI, KH, KW, strides, padding),
                            target='cuda')
+
 print(task.config_space)
 
 # Use local gpu, measure 10 times for every config to reduce variance
@@ -179,10 +184,10 @@ measure_option = autotvm.measure_option(
 # Begin tuning, log records to file `conv2d.log`
 # During tuning we will also try many invalid configs, so you are expected to
 # see many error reports. As long as you can see non-zero GFLOPS, it is okay.
-tuner = autotvm.tuner.XGBTuner(task)
-tuner.tune(n_trial=20,
-           measure_option=measure_option,
-           callbacks=[autotvm.callback.log_to_file('conv2d.log')])
+#tuner = autotvm.tuner.XGBTuner(task)
+#tuner.tune(n_trial=300,
+#           measure_option=measure_option,
+#           callbacks=[autotvm.callback.log_to_file('conv2d.log')])
 
 #########################################################################
 # Finally we can inspect the best config from log file, check correctness,
