@@ -215,7 +215,7 @@ def tune_and_evaluate(tuning_opt):
 
     # run tuning tasks
     print("Tuning...")
-    tune_tasks(tasks, **tuning_opt)
+    #tune_tasks(tasks, **tuning_opt)
 
     # compile kernels with history best records
     with autotvm.apply_history_best(log_file):
@@ -246,7 +246,7 @@ def tune_and_evaluate(tuning_opt):
 # We do not run the tuning in our webpage server since it takes too long.
 # Uncomment the following line to run it by yourself.
 
-# tune_and_evaluate(tuning_option)
+tune_and_evaluate(tuning_option)
 
 ######################################################################
 # Sample Output
