@@ -163,6 +163,8 @@ def load_from_file(filename):
     input: autotvm.tuner.MeasureInput
     result: autotvm.tuner.MeasureResult
     """
+    #print("Maroun***************************")
+    print("filenmae= %s" % filename)
     for row in open(filename):
         if row and not row.startswith('#'):
             yield decode(row)

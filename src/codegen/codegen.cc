@@ -21,9 +21,12 @@ runtime::Module Build(const Array<LoweredFunc>& funcs,
   if (pos != std::string::npos) {
     mode = mode.substr(0, pos);
   }
+//  printf("Maroun %s\n",mode.c_str());
   std::string build_f_name = "codegen.build_" + mode;
   // the build function.
   const PackedFunc* bf = runtime::Registry::Get(build_f_name);
+//  CHECK(mode == "CUDA")
+//      << "Target " << target << " is CUDA";
   CHECK(bf != nullptr)
       << "Target " << target << " is not enabled";
   runtime::Module m = (*bf)(funcs, target);

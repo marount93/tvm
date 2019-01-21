@@ -25,6 +25,9 @@ from .space import FallbackConfigEntity
 
 logger = logging.getLogger('autotvm')
 
+
+import traceback
+
 class DispatchContext(object):
     """
     Base class of dispatch context.
@@ -55,6 +58,7 @@ class DispatchContext(object):
         cfg : ConfigSpace
             The specific configuration.
         """
+#        print("Maroun DispatchContext: target=%s workload=%s" % (target, workload))
         ret = self._query_inside(target, workload)
         if ret is None:
             ret = self._old_ctx.query(target, workload)
@@ -276,7 +280,9 @@ class ApplyHistoryBest(DispatchContext):
         best_by_model = self.best_by_model
 
         counter = 0
+#        print("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&")
         for inp, res in records:
+#            print("Maroun inp:%s res:%s" % (inp,res))
             counter += 1
             if res.error_no != 0:
                 continue
@@ -303,6 +309,7 @@ class ApplyHistoryBest(DispatchContext):
         logger.debug("Finish loading %d records", counter)
 
     def _query_inside(self, target, workload):
+#        print("===========================================================================")
         if target is None:
             raise RuntimeError("Need a target context to find the history best. "
                                "Hint: If your target is llvm, use `with tvm.target.create('llvm'):`"
@@ -310,6 +317,8 @@ class ApplyHistoryBest(DispatchContext):
 
         # first try matching by model
         key = (target.model, workload)
+#        key=("cuda",workload)
+        print("KEYYYYYYYY: target.model=%s workload=%s" % key)
         if key in self._best_user_defined:
             return self._best_user_defined[key]
         if key in self.best_by_model:
@@ -352,11 +361,16 @@ class FallbackContext(DispatchContext):
         self.messages = set()
 
     def _query_inside(self, target, workload):
+#        print("+++++++++++++++++++++++++++++++++++++++++++")
         key = (str(target), workload)
         if key in self.memory:
             return self.memory[key]
 
         if not self.silent:
+#            print("----------------Maroun----------------")
+#            for line in traceback.format_stack():
+#                print(line.strip())
+
             msg = "Cannot find config for target=%s, workload=%s. A fallback configuration "\
                   "is used, which may bring great performance regression." % (target, workload)
             if msg not in self.messages:
@@ -454,6 +468,7 @@ class ApplyGraphBest(DispatchContext):
         cfg : ConfigSpace
             The specific configuration.
         """
+#        print("*************************************************************")
         if self._counter < len(self._records):
             cfg = self._records[self._counter][0].config
             self._counter += 1

@@ -344,6 +344,7 @@ def conv2d_winograd_weight_transform(kernel, tile_size):
     K = 3
 
     shape = get_const_tuple(kernel.shape)
+    print(shape[2:])
     assert shape[2:] == (K, K), "Only support 3x3 kernel"
 
     r = tile_size + K - 1

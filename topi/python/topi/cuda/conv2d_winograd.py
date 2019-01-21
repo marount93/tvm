@@ -360,6 +360,7 @@ def _alter_conv2d_layout(attrs, inputs, tinfos):
         workload = autotvm.task.args_to_workload(
             [tinfos[0], tinfos[1], strides, padding, dilation, layout, out_dtype], conv2d)
         cfg = autotvm.DispatchContext.current.query(target, workload)
+        print("Tork: %s" % cfg)
 
         if cfg.is_fallback:  # if is fallback, clear query cache and return None
             autotvm.task.clear_fallback_cache(target, workload)

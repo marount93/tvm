@@ -118,7 +118,8 @@ class CUDADeviceAPI final : public DeviceAPI {
     if (ctx_from.device_type == kDLGPU && ctx_to.device_type == kDLGPU) {
       CUDA_CALL(cudaSetDevice(ctx_from.device_id));
       if (ctx_from.device_id == ctx_to.device_id) {
-        GPUCopy(from, to, size, cudaMemcpyDeviceToDevice, cu_stream);
+//        printf("Maroun ctx_from.device_id == ctx_to.device_id\n");
+		GPUCopy(from, to, size, cudaMemcpyDeviceToDevice, cu_stream);
       } else {
         cudaMemcpyPeerAsync(to, ctx_to.device_id,
                             from, ctx_from.device_id,
@@ -126,9 +127,11 @@ class CUDADeviceAPI final : public DeviceAPI {
       }
     } else if (ctx_from.device_type == kDLGPU && ctx_to.device_type == kDLCPU) {
       CUDA_CALL(cudaSetDevice(ctx_from.device_id));
+//		printf("Maroun ctx_from.device_type == kDLGPU && ctx_to.device_type == kDLCPU\n");
       GPUCopy(from, to, size, cudaMemcpyDeviceToHost, cu_stream);
     } else if (ctx_from.device_type == kDLCPU && ctx_to.device_type == kDLGPU) {
       CUDA_CALL(cudaSetDevice(ctx_to.device_id));
+//		printf("Maroun ctx_from.device_type == kDLCPU && ctx_to.device_type == kDLGPU\n");
       GPUCopy(from, to, size, cudaMemcpyHostToDevice, cu_stream);
     } else {
       LOG(FATAL) << "expect copy from/to GPU or between GPU";

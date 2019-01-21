@@ -24,7 +24,9 @@ namespace runtime {
 void GraphRuntime::Run() {
   // setup the array and requirements.
   for (size_t i = 0; i < op_execs_.size(); ++i) {
-    if (op_execs_[i]) op_execs_[i]();
+    if (op_execs_[i]) {	
+	op_execs_[i]();
+    }
   }
 }
 /*!
@@ -230,6 +232,7 @@ void GraphRuntime::SetupStorage() {
 }
 
 void GraphRuntime::SetupOpExecs() {
+//	printf("Maroun GraphRuntime::SetupOpExecs\n");
   op_execs_.resize(this->GetNumOfNodes());
   // setup the array and requirements.
   for (uint32_t nid = 0; nid < this->GetNumOfNodes(); ++nid) {
@@ -253,6 +256,7 @@ std::function<void()> GraphRuntime::CreateTVMOp(
     const TVMOpParam& param,
     const std::vector<DLTensor>& args,
     size_t num_inputs) {
+
   struct OpArgs {
     std::vector<DLTensor> args;
     std::vector<TVMValue> arg_values;
@@ -287,7 +291,7 @@ std::function<void()> GraphRuntime::CreateTVMOp(
     auto fexec = [arg_ptr]() {
       DLTensor* from = static_cast<DLTensor*>(arg_ptr->arg_values[0].v_handle);
       DLTensor* to = static_cast<DLTensor*>(arg_ptr->arg_values[1].v_handle);
-      TVM_CCALL(TVMArrayCopyFromTo(from, to, nullptr));
+	  TVM_CCALL(TVMArrayCopyFromTo(from, to, nullptr));
     };
     return fexec;
   }

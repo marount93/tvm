@@ -145,6 +145,7 @@ NDArray NDArray::FromDLPack(DLManagedTensor* tensor) {
 void NDArray::CopyFromTo(DLTensor* from,
                          DLTensor* to,
                          TVMStreamHandle stream) {
+//	printf("Maroun NDArray\n");
   size_t from_size = GetDataSize(*from);
   size_t to_size = GetDataSize(*to);
   CHECK_EQ(from_size, to_size)
@@ -231,6 +232,7 @@ void TVMDLManagedTensorCallDeleter(DLManagedTensor* dltensor) {
 int TVMArrayCopyFromBytes(TVMArrayHandle handle,
                           void* data,
                           size_t nbytes) {
+//	printf("Maroun TVMArrayCopyFromBytes\n");
   API_BEGIN();
   TVMContext cpu_ctx;
   cpu_ctx.device_type = kDLCPU;
@@ -248,6 +250,7 @@ int TVMArrayCopyFromBytes(TVMArrayHandle handle,
 int TVMArrayCopyToBytes(TVMArrayHandle handle,
                         void* data,
                         size_t nbytes) {
+//	printf("Maroun TVMArrayCopyToBytes\n");
   API_BEGIN();
   TVMContext cpu_ctx;
   cpu_ctx.device_type = kDLCPU;
