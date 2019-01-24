@@ -1,0 +1,12 @@
+fuse_conv2d_kernel0 grid=(13,1,1),  block=(2,13,20)
+fuse_tanh_kernel0 grid=(27,1,1),  block=(512,1,1)
+fuse_max_pool2d_kernel0 grid=(7,1,1),  block=(512,1,1)
+fuse_conv2d_1_kernel0 grid=(11,1,5),  block=(1,11,10)
+fuse_tanh_1_kernel0 grid=(12,1,1),  block=(512,1,1)
+fuse_max_pool2d_1_kernel0 grid=(3,1,1),  block=(512,1,1)
+fuse_flatten_kernel0 grid=(3,1,1),  block=(512,1,1)
+fuse_dense_kernel0 grid=(10,1,1),  block=(64,1,1)
+fuse_softmax_kernel0 grid=(1,1,1),  block=(1,1,1)
+fuse_softmax_kernel1 grid=(1,1,1),  block=(64,1,1)
+fuse_softmax_kernel2 grid=(1,1,1),  block=(64,1,1)
+
