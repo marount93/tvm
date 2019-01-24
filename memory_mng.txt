@@ -1,0 +1,50 @@
+cudaMalloc, ptr: 0x13045cd400 size: 54080
+cudaMalloc, ptr: 0x13046c0000 size: 40
+cudaMalloc, ptr: 0x13046c0200 size: 40
+cudaMalloc, ptr: 0x13047c0000 size: 3136
+cudaMalloc, ptr: 0x13047c0e00 size: 2000
+cudaMalloc, ptr: 0x13048c0000 size: 100000
+cudaMalloc, ptr: 0x13045da800 size: 50000
+cudaMalloc, ptr: 0x13046c0400 size: 40
+CudaMemcpy 100000 to: 0x13048c0000 from: 0x2a7a840
+CudaMemcpy 50000 to: 0x13045da800 from: 0x2a9f280
+CudaMemcpy 2000 to: 0x13047c0e00 from: 0x2a7a040
+CudaMemcpy 40 to: 0x13046c0400 from: 0x2a79e80
+CudaMemcpy 3136 to: 0x13047c0000 from: 0x2b02be0
+Maroun *** CUDALaunch:
+fuse_conv2d_kernel0 grid=(13,1,1),  block=(2,13,20)
+arg1: 0x13047c0000 arg2: 0x13047c0e00 arg3: 0x13045c0000
+Maroun *** CUDALaunch:
+fuse_tanh_kernel0 grid=(27,1,1),  block=(512,1,1)
+arg1: 0x13045cd400 arg2: 0x13045c0000
+Maroun *** CUDALaunch:
+fuse_max_pool2d_kernel0 grid=(7,1,1),  block=(512,1,1)
+arg1: 0x13045cd400 arg2: 0x13045c0000
+Maroun *** CUDALaunch:
+fuse_conv2d_1_kernel0 grid=(11,1,5),  block=(1,11,10)
+arg1: 0x13045c0000 arg2: 0x13048c0000 arg3: 0x13045cd400
+Maroun *** CUDALaunch:
+fuse_tanh_1_kernel0 grid=(12,1,1),  block=(512,1,1)
+arg1: 0x13045c0000 arg2: 0x13045cd400
+Maroun *** CUDALaunch:
+fuse_max_pool2d_1_kernel0 grid=(3,1,1),  block=(512,1,1)
+arg1: 0x13045c0000 arg2: 0x13045cd400
+Maroun *** CUDALaunch:
+fuse_flatten_kernel0 grid=(3,1,1),  block=(512,1,1)
+arg1: 0x13045c0000 arg2: 0x13045cd400
+Maroun *** CUDALaunch:
+fuse_dense_kernel0 grid=(10,1,1),  block=(64,1,1)
+arg1: 0x13045c0000 arg2: 0x13045da800 arg3: 0x13046c0000 arg4: 0x13046c0400
+cudaMalloc, ptr: 0x13047c1600 size: 4096
+cudaMalloc, ptr: 0x13047c2600 size: 4096
+Maroun *** CUDALaunch:
+fuse_softmax_kernel0 grid=(1,1,1),  block=(1,1,1)
+arg1: 0x13047c1600 arg2: 0x13046c0000
+Maroun *** CUDALaunch:
+fuse_softmax_kernel1 grid=(1,1,1),  block=(64,1,1)
+arg1: 0x13046c0000 arg2: 0x13047c1600 arg3: 0x13047c2600
+Maroun *** CUDALaunch:
+fuse_softmax_kernel2 grid=(1,1,1),  block=(64,1,1)
+arg1: 0x13046c0200 arg2: 0x13046c0000 arg3: 0x13047c1600 arg4: 0x13047c2600
+CudaMemcpy 40 to: 0x31d9b80 from: 0x13046c0200
+
